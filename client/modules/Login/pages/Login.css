@@ -1,0 +1,31 @@
+.centerLogInForm {
+	max-width: 500px;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+.centerLogInForm .custom-row {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.btn-submit {
+	margin: 0 auto;
+    display: flex !important;
+}
+
+.signup {
+	text-align: center;
+	margin-top: 15px;
+}
+.has-error {
+	color: red;
+	font-size: 12px;
+}
+.no-error {
+	display: none;
+}
+input.has-error {
+	border: 1px solid red;
+}
