@@ -13,6 +13,10 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 
 const passport = require('passport');
 const logger = require('morgan');
+
+const http = require('http');
+const socketIo = require('socket.io');
+const axios = require('axios');
 // Initialize the Express App
 const app = new Express();
 
@@ -63,6 +67,47 @@ app.use(bodyParser.json({ limit: '20mb' }));
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 app.use(Express.static(path.resolve(__dirname, '../dist/client')));
 app.use('/api', users);
+
+const server = http.createServer(app); // create socket server
+const io = socketIo(server); // < Interesting!
+
+/* ================= socket section ============= */
+
+// io.on('connection', function (socket) {
+//   const tweets = setInterval(function () {
+//     getBieberTweet(function (tweet) {
+//       socket.volatile.emit('bieber tweet', tweet);
+//     });
+//   }, 100);
+
+//   socket.on('disconnect', function () {
+//     clearInterval(tweets);
+//   });
+// });
+
+io.on("connection", socket => {
+  console.log("New client connected"), setInterval(
+    () => getApiAndEmit(socket),
+    10000
+  );
+  socket.on("disconnect", () => console.log("Client disconnected"));
+});
+
+const getApiAndEmit = async socket => {
+  socket.emit("FromAPI", 'test');
+  // try {
+  //   const res = await axios.get(
+  //     "https://api.darksky.net/forecast/PUT_YOUR_API_KEY_HERE/43.7695,11.2558"
+  //   );
+  //   socket.emit("FromAPI", res.data.currently.temperature);
+  // } catch (error) {
+  //   console.error(`Error: ${error.code}`);
+  // }
+};
+
+
+/* ================= socket section ============= */
+
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {
   const head = Helmet.rewind();
@@ -146,10 +191,12 @@ app.use((req, res, next) => {
 });
 
 // start app
-app.listen(serverConfig.port, (error) => {
+server.listen(serverConfig.port, (error) => {
   if (!error) {
     console.log(`MERN is running on port: ${serverConfig.port}! Build something amazing!`); // eslint-disable-line
   }
 });
+
+//server.listen(serverConfig.port, () => console.log(`Listening on port ${serverConfig.port}`));
 
 export default app;
