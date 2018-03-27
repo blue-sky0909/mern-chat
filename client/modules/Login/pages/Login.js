@@ -47,16 +47,15 @@ class Login extends Component  {
       return this.props.loginActions.reset();
     } else if(nextProps.login.data.success === true) {
       localStorage.setItem('token', nextProps.login.data.token);
+      localStorage.setItem('user', JSON.stringify(user));
       if(this.state.remember) {
         const user = {
           email: this.state.email,
           password: this.state.password
-        }
-        localStorage.setItem('user', JSON.stringify(user));
+        }        
         localStorage.setItem('remember', true);
       } else {
-        localStorage.removeItem('user');
-        localStorage.removeItem('remember');
+        localStorage.removeItem('user');        
       }
       this.props.history.push('/');      
     }

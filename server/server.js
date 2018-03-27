@@ -86,15 +86,18 @@ const io = socketIo(server); // < Interesting!
 // });
 
 io.on("connection", socket => {
-  console.log("New client connected"), setInterval(
+  console.log("New client connected");
+  setInterval(
     () => getApiAndEmit(socket),
     10000
   );
+  socket.on("message", (data) => console.log(data));
   socket.on("disconnect", () => console.log("Client disconnected"));
 });
 
 const getApiAndEmit = async socket => {
   socket.emit("FromAPI", 'test');
+
   // try {
   //   const res = await axios.get(
   //     "https://api.darksky.net/forecast/PUT_YOUR_API_KEY_HERE/43.7695,11.2558"

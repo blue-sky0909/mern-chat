@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import socketIOClient from 'socket.io-client';
-
+import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel, Panel, Checkbox } from 'react-bootstrap';
 import Login from '../../Login/pages/Login'
 class Dashboard extends Component {
 
@@ -12,8 +12,10 @@ class Dashboard extends Component {
     this.state = {
       token: null,
       response: false,
-      endpoint: "localhost:8000"
+      endpoint: "localhost:8000",
+      message: ""
     }
+    this.sendMessage = this.sendMessage.bind(this);
   }
 
   componentDidMount() {    
@@ -27,14 +29,45 @@ class Dashboard extends Component {
     this.setState({ token: localStorage.getItem('token') });
   }
 
+  sendMessage() {
+    console.log(123)
+    const { endpoint, message } = this.state;
+    const socket = socketIOClient(endpoint);
+    console.log(message.trim().length)
+    if(message.trim().length > 0) {
+      const data = {
+        user: JSON.parse(localStorage.getItem('user')),
+        message: message
+      }
+      socket.send(data);
+    }    
+  }
+
   render() {
     const { token, response } = this.state;
-console.log("response", response)  
+    console.log("response", response)  
     if (!token) {
       return <Login history={this.props.history}/>
     } else {
       return (
-        <h1>This is a dashboard page {response}</h1>
+        <Panel>
+          <h1>This is a dashboard page {response}</h1>
+          <Form horizontal className="insideLogInForm" onSubmit={this.submit}>
+            <FormGroup controlId="formHorizontalEmail">
+              <Row>
+                <Col sm={2}>
+                  Email
+                </Col>
+                <Col sm={8}>
+                  <FormControl
+                    type="text" name="message" value={message}
+                    onChange={(e) =>this.setState({ message: e.target.value})} />
+                </Col>
+              </Row>
+            </FormGroup>
+            <Button onClick={this.sendMessage} bsStyle="primary"> Send Message </Button>
+          </Form>
+        </Panel>
       );
     }
   }
