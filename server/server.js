@@ -13,10 +13,14 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 
 const passport = require('passport');
 const logger = require('morgan');
-
 const http = require('http');
 const socketIo = require('socket.io');
 const axios = require('axios');
+
+require('./models/message');
+require('./models/user');
+
+const messageManage = require('./services/messageManage');
 // Initialize the Express App
 const app = new Express();
 
@@ -73,41 +77,15 @@ const io = socketIo(server); // < Interesting!
 
 /* ================= socket section ============= */
 
-// io.on('connection', function (socket) {
-//   const tweets = setInterval(function () {
-//     getBieberTweet(function (tweet) {
-//       socket.volatile.emit('bieber tweet', tweet);
-//     });
-//   }, 100);
-
-//   socket.on('disconnect', function () {
-//     clearInterval(tweets);
-//   });
-// });
-
 io.on("connection", socket => {
   console.log("New client connected");
-  setInterval(
-    () => getApiAndEmit(socket),
-    10000
-  );
-  socket.on("message", (data) => console.log(data));
+
+  socket.on("message", (data) => {
+    socket.emit("fromMessage", data);
+    messageManage.saveMessage(data);    
+  });
   socket.on("disconnect", () => console.log("Client disconnected"));
 });
-
-const getApiAndEmit = async socket => {
-  socket.emit("FromAPI", 'test');
-
-  // try {
-  //   const res = await axios.get(
-  //     "https://api.darksky.net/forecast/PUT_YOUR_API_KEY_HERE/43.7695,11.2558"
-  //   );
-  //   socket.emit("FromAPI", res.data.currently.temperature);
-  // } catch (error) {
-  //   console.error(`Error: ${error.code}`);
-  // }
-};
-
 
 /* ================= socket section ============= */
 

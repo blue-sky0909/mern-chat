@@ -3,7 +3,14 @@ import { Route, Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import socketIOClient from 'socket.io-client';
 import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel, Panel, Checkbox } from 'react-bootstrap';
-import Login from '../../Login/pages/Login'
+
+import History from '../../../components/History/History';
+import Login from '../../Login/pages/Login';
+import styles from  './Dashboard.css';
+
+const endpoint = "localhost:8000";
+const socket = socketIOClient(endpoint);
+
 class Dashboard extends Component {
 
   constructor(props) {
@@ -15,57 +22,58 @@ class Dashboard extends Component {
       endpoint: "localhost:8000",
       message: ""
     }
-    this.sendMessage = this.sendMessage.bind(this);
+    this.submit = this.submit.bind(this);
   }
 
   componentDidMount() {    
     this.setState({ token: localStorage.getItem('token') });
-    const { endpoint } = this.state;
-    const socket = socketIOClient(endpoint);
-    socket.on("FromAPI", data => this.setState({ response: data }));
+    
+    socket.on("fromMessage", data => {
+      console.log(data)
+      this.setState({ response: data });
+    });
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({ token: localStorage.getItem('token') });
   }
 
-  sendMessage() {
-    console.log(123)
-    const { endpoint, message } = this.state;
-    const socket = socketIOClient(endpoint);
-    console.log(message.trim().length)
+  submit(e) {
+    console.log(111)
+    e.preventDefault();
+    const { message } = this.state;
     if(message.trim().length > 0) {
       const data = {
-        user: JSON.parse(localStorage.getItem('user')),
-        message: message
+        from: JSON.parse(localStorage.getItem('user'))._id,
+        to: JSON.parse(localStorage.getItem('user'))._id,
+        content: message
       }
       socket.send(data);
     }    
   }
 
   render() {
-    const { token, response } = this.state;
+    const { token, response, message } = this.state;
     console.log("response", response)  
     if (!token) {
       return <Login history={this.props.history}/>
     } else {
       return (
         <Panel>
-          <h1>This is a dashboard page {response}</h1>
           <Form horizontal className="insideLogInForm" onSubmit={this.submit}>
             <FormGroup controlId="formHorizontalEmail">
-              <Row>
-                <Col sm={2}>
-                  Email
-                </Col>
-                <Col sm={8}>
-                  <FormControl
-                    type="text" name="message" value={message}
-                    onChange={(e) =>this.setState({ message: e.target.value})} />
-                </Col>
-              </Row>
-            </FormGroup>
-            <Button onClick={this.sendMessage} bsStyle="primary"> Send Message </Button>
+              <History response={response} />
+              <div className={styles['message-section']}>
+                <FormControl
+                  type="text" name="message" value={message}
+                  onChange={(e) =>this.setState({ message: e.target.value})} />
+                <Button
+                  type="submit"
+                  bsStyle="primary"
+                  className={styles['btn-send']}
+                > Send Message </Button>
+              </div>
+            </FormGroup>            
           </Form>
         </Panel>
       );

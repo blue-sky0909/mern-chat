@@ -38,7 +38,7 @@ class Login extends Component  {
   }
 
   componentWillReceiveProps(nextProps) {
-
+console.log(nextProps.login.data)
     if(nextProps.login.data.success === false) {
       this._notificationSystem.addNotification({
         message: nextProps.login.data.message,
@@ -47,16 +47,8 @@ class Login extends Component  {
       return this.props.loginActions.reset();
     } else if(nextProps.login.data.success === true) {
       localStorage.setItem('token', nextProps.login.data.token);
-      localStorage.setItem('user', JSON.stringify(user));
-      if(this.state.remember) {
-        const user = {
-          email: this.state.email,
-          password: this.state.password
-        }        
-        localStorage.setItem('remember', true);
-      } else {
-        localStorage.removeItem('user');        
-      }
+      localStorage.setItem('user', JSON.stringify(nextProps.login.data.user));
+      localStorage.setItem('remember', this.state.remember);
       this.props.history.push('/');      
     }
   }
