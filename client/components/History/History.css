@@ -1,0 +1,17 @@
+.send-message {
+	display: inline-block;
+	font-size: 14px;
+	margin: 5px;
+	margin-right: 50px;
+	padding: 10px;
+	float: right;
+	clear: both;
+	background: #2483da8c;
+    border-radius: 5px;
+}
+
+.receive-message {
+	text-align: left;
+	font-size: 14px;
+	margin: 15px;
+}

@@ -73,7 +73,7 @@ app.use(Express.static(path.resolve(__dirname, '../dist/client')));
 app.use('/api', users);
 
 const server = http.createServer(app); // create socket server
-const io = socketIo(server); // < Interesting!
+const io = socketIo(server);
 
 /* ================= socket section ============= */
 

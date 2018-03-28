@@ -26,10 +26,8 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {    
-    this.setState({ token: localStorage.getItem('token') });
-    
+    this.setState({ token: localStorage.getItem('token') });   
     socket.on("fromMessage", data => {
-      console.log(data)
       this.setState({ response: data });
     });
   }
@@ -39,13 +37,12 @@ class Dashboard extends Component {
   }
 
   submit(e) {
-    console.log(111)
     e.preventDefault();
     const { message } = this.state;
     if(message.trim().length > 0) {
       const data = {
-        from: JSON.parse(localStorage.getItem('user'))._id,
-        to: JSON.parse(localStorage.getItem('user'))._id,
+        from_user: JSON.parse(localStorage.getItem('user'))._id,
+        to_user: '5ab4bd705dc8207f350ea01c',
         content: message
       }
       socket.send(data);
@@ -54,12 +51,12 @@ class Dashboard extends Component {
 
   render() {
     const { token, response, message } = this.state;
-    console.log("response", response)  
+
     if (!token) {
       return <Login history={this.props.history}/>
     } else {
       return (
-        <Panel>
+        <Panel className={styles.dashboard}>
           <Form horizontal className="insideLogInForm" onSubmit={this.submit}>
             <FormGroup controlId="formHorizontalEmail">
               <History response={response} />
@@ -71,7 +68,7 @@ class Dashboard extends Component {
                   type="submit"
                   bsStyle="primary"
                   className={styles['btn-send']}
-                > Send Message </Button>
+                >Send Message</Button>
               </div>
             </FormGroup>            
           </Form>
