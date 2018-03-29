@@ -47,6 +47,7 @@ import Helmet from 'react-helmet';
 import routes from '../client/routes';
 import { fetchComponentData } from './util/fetchData';
 import users from './routes/user.routes';
+import messages from './routes/message.routes';
 import serverConfig from './config';
 
 // Set native promises as mongoose promise
@@ -71,6 +72,7 @@ app.use(bodyParser.json({ limit: '20mb' }));
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 app.use(Express.static(path.resolve(__dirname, '../dist/client')));
 app.use('/api', users);
+app.use('/api', messages);
 
 const server = http.createServer(app); // create socket server
 const io = socketIo(server);
@@ -82,7 +84,7 @@ io.on("connection", socket => {
 
   socket.on("message", (data) => {
     socket.emit("fromMessage", data);
-    messageManage.saveMessage(data);    
+    messageManage.saveMessage(data);
   });
   socket.on("disconnect", () => console.log("Client disconnected"));
 });

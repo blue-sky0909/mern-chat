@@ -9,11 +9,13 @@ import app from './modules/App/AppReducer';
 import intl from './modules/Intl/IntlReducer';
 import loginReducer from './modules/Login/LoginReducer';
 import registerReducer from './modules/Register/RegisterReducer';
+import dashboardReducer from './modules/Dashboard/DashboardReducer';
 // Combine all reducers into one root reducer
 export default combineReducers({
   app,
   intl,
   routing: routerReducer,
   login: loginReducer,
-  register: registerReducer
+  register: registerReducer,
+  dashboard: dashboardReducer
 });
