@@ -80,12 +80,13 @@ const io = socketIo(server);
 /* ================= socket section ============= */
 
 io.on("connection", socket => {
-  console.log("New client connected");
-
+  console.log("New client connected");  
   socket.on("message", (data) => {
-    socket.emit("fromMessage", data);
     messageManage.saveMessage(data);
+    socket.broadcast.emit('fromMessage', data);
+    socket.emit('fromMessage', data);
   });
+ 
   socket.on("disconnect", () => console.log("Client disconnected"));
 });
 

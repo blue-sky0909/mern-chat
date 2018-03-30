@@ -28,7 +28,6 @@ export default class History extends Component {
     componentWillReceiveProps(nextProps) {
         const { sendMessage } = this.props;
         let { histories } = this.state;
-        console.log(nextProps.response)
         if(nextProps.response !== false && sendMessage) {
             histories.push(nextProps.response);
             this.setState({ histories });

@@ -23,7 +23,7 @@ class Dashboard extends Component {
       response: false,
       endpoint: "localhost:8000",
       message: "",
-      sendMessage: false
+      sendMessage: true
     }
     this.submit = this.submit.bind(this);
   }
@@ -33,7 +33,6 @@ class Dashboard extends Component {
     this.setState({ token: localStorage.getItem('token') });   
     socket.on("fromMessage", data => {
       this.setState({ response: data });
-      this.setState({ response: false });
     });
   }
 
