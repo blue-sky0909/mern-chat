@@ -29,11 +29,14 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
+    const { message } = this.state;
     this.props.dashboardActions.getMessages();
     this.setState({ token: localStorage.getItem('token') });   
     socket.on("fromMessage", data => {
       this.setState({ response: data });
+      this.scrollDown(); 
     });
+    this.scrollDown();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -53,8 +56,16 @@ class Dashboard extends Component {
       socket.send(data);
     }
     this.setState({ message: ""});
-    const parent = document.getElementById( "message-history" ); 
-    parent.scrollTop = parent.scrollHeight;
+    this.setState({ response: false });
+    this.scrollDown();
+
+  }
+
+  scrollDown() {
+    setTimeout(function() {
+      const parent = document.getElementById( "message-history" ); 
+      parent.scrollTop = parent.scrollHeight;
+    }, 100)
   }
 
   setMessage(e) {
@@ -66,7 +77,7 @@ class Dashboard extends Component {
   render() {
     const { token, response, message, sendMessage } = this.state;
     const { dashboard } = this.props;
- 
+
     if (!token) {
       return <Login history={this.props.history}/>
     } else {
