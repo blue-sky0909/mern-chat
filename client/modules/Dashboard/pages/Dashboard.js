@@ -54,7 +54,8 @@ class Dashboard extends Component {
       const data = {
         from_user: JSON.parse(localStorage.getItem('user'))._id,
         to_user: '5ab4bd705dc8207f350ea01c',
-        content: message
+        content: message,
+        created_at: new Date()
       }
       socket.send(data);
     }

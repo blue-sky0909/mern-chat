@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import socketIOClient from 'socket.io-client';
 import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel, Panel, Checkbox } from 'react-bootstrap';
 import _ from 'lodash';
+import moment from 'moment';
 
 import styles from './History.css';
 
@@ -37,15 +38,26 @@ export default class History extends Component {
     render() { 
         const { response } = this.props;
         const { histories, user } = this.state;
-
+        let tempDate = null;
         return(
             <div className={styles['message-history']} id="message-history">
                 {
                     _.map(histories, (history, index) => {
+                        const date1 = moment(history.created_at).format('YYYY/MM/DD');
+                           let dateString = null;
+                        if (date1 != tempDate) {
+                            dateString = date1;
+                        }
+                        tempDate = date1;
+
                         return (
-                            <div key={index} className={history.from_user === user._id? styles['send-message']: styles['receive-message']}>
-                                {history.content}
+                            <div>
+                                {dateString}
+                                <div key={index} className={history.from_user === user._id? styles['send-message']: styles['receive-message']}>                            
+                                    {history.content}
+                                </div>
                             </div>
+                            
                        )
                     })
                 }
