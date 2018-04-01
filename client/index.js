@@ -9,7 +9,7 @@ import { configureStore } from './store';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-
+import 'react-notifications/lib/notifications.css';
 // Initialize store
 const store = configureStore(window.__INITIAL_STATE__);
 const mountApp = document.getElementById('root');

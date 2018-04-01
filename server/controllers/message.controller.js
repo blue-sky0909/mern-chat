@@ -1,6 +1,5 @@
-// const mongoose = require('mongoose');
-// const Message = mongoose.model('message');
 import Message from '../models/message';
+
 export function getMessages(req, res) {
     const today = new Date()
     let AweekAgo = new Date();

@@ -17,9 +17,6 @@ const http = require('http');
 const socketIo = require('socket.io');
 const axios = require('axios');
 
-require('./models/message');
-require('./models/user');
-
 const messageManage = require('./services/messageManage');
 // Initialize the Express App
 const app = new Express();
@@ -61,6 +58,8 @@ mongoose.connect(serverConfig.mongoURL, (error) => {
   }
 });
 
+require('./models/message');
+require('./models/user');
 require('./services/passport');
 
 // Apply body Parser and server public assets and routes

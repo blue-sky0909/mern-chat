@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import socketIOClient from 'socket.io-client';
 import { bindActionCreators } from 'redux';
 import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel, Panel, Checkbox } from 'react-bootstrap';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 import * as dashboardActions from '../DashboardActions';
 import History from '../../../components/History/History';
@@ -33,6 +34,8 @@ class Dashboard extends Component {
     this.props.dashboardActions.getMessages();
     this.setState({ token: localStorage.getItem('token') });   
     socket.on("fromMessage", data => {
+      if(data.from_user && data.from_user != JSON.parse(localStorage.getItem('user'))._id)
+        NotificationManager.info('New message');
       this.setState({ response: data });
       this.scrollDown(); 
     });
@@ -99,6 +102,7 @@ class Dashboard extends Component {
                 </div>
               </FormGroup>            
             </Form>
+            <NotificationContainer/>
           </Panel>
         );
       } else {
