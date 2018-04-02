@@ -44,7 +44,7 @@ export default class History extends Component {
                 {
                     _.map(histories, (history, index) => {
                         const date1 = moment(history.created_at).format('YYYY/MM/DD');
-                           let dateString = null;
+                        let dateString = null;
                         if (date1 != tempDate) {
                             dateString = date1;
                         }
@@ -52,7 +52,10 @@ export default class History extends Component {
 
                         return (
                             <div>
-                                {dateString}
+                                {
+                                    dateString ? <div className={styles.date}>{dateString}</div> : null
+                                }
+                                
                                 <div key={index} className={history.from_user === user._id? styles['send-message']: styles['receive-message']}>                            
                                     {history.content}
                                 </div>

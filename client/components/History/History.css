@@ -31,3 +31,10 @@
     border-bottom: 2px solid;
     border-color: #ccc
 }
+.date {
+	text-align: center;
+    clear: both;
+    margin: 0 auto;
+    font-weight: bold;
+    padding: 20px;
+}
