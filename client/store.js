@@ -24,11 +24,6 @@ export function configureStore(initialState = {}) {
     applyMiddleware(logger)
   ];
 
-  if (process.env.CLIENT && process.env.NODE_ENV === 'development') {
-    // Enable DevTools only when rendering on client and during development.
-    enhancers.push(window.devToolsExtension ? window.devToolsExtension() : DevTools.instrument());
-  }
-
   const store = createStore(rootReducer, initialState, compose(...enhancers));
 //  sagaMiddleware.run(rootSaga);
   // For hot reloading reducers

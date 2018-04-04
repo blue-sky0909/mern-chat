@@ -45,6 +45,7 @@ import routes from '../client/routes';
 import { fetchComponentData } from './util/fetchData';
 import users from './routes/user.routes';
 import messages from './routes/message.routes';
+import workspaces from './routes/workspace.routes';
 import serverConfig from './config';
 
 // Set native promises as mongoose promise
@@ -60,6 +61,7 @@ mongoose.connect(serverConfig.mongoURL, (error) => {
 
 require('./models/message');
 require('./models/user');
+require('./models/workspace');
 require('./services/passport');
 
 // Apply body Parser and server public assets and routes
@@ -72,6 +74,7 @@ app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 app.use(Express.static(path.resolve(__dirname, '../dist/client')));
 app.use('/api', users);
 app.use('/api', messages);
+app.use('/api', workspaces);
 
 const server = http.createServer(app); // create socket server
 const io = socketIo(server);
