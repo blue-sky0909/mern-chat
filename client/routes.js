@@ -19,6 +19,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/Login/pages/Login');
   require('./modules/Register/pages/Register');
   require('./modules/Dashboard/pages/Dashboard');
+  require('./modules/Workspace/pages/Workspace');
 }
 
 // react-router setup with code-splitting
@@ -37,6 +38,14 @@ export default (
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/Login/pages/Login').default);
+        });
+      }}
+    />
+    <Route
+      path="/workspace"
+      getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Workspace/pages/Workspace').default);
         });
       }}
     />

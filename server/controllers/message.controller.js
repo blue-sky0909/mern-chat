@@ -4,8 +4,6 @@ export function getMessages(req, res) {
     const today = new Date()
     let AweekAgo = new Date();
     AweekAgo.setDate(today.getDate() - 7);
-    console.log(AweekAgo);
-    console.log(today);
     Message.find({
         created_at: {
             $gte: AweekAgo,

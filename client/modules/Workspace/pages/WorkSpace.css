@@ -1,0 +1,29 @@
+.centerCreateForm {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+.centerCreateForm .custom-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-submit {
+    margin: 0 auto;
+    display: flex !important;
+    align-items: center;
+}
+
+
+.has-error {
+    color: red;
+    font-size: 12px;
+}
+.no-error {
+    display: none;
+}
+input.has-error {
+    border: 1px solid red;
+}
