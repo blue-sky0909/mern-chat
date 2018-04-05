@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 import crypto from 'crypto';
+import jwt from 'jsonwebtoken';
+const bcrypt = require('bcrypt-nodejs');
 const Schema = mongoose.Schema;
 
 const workspaceSchema = new Schema({
