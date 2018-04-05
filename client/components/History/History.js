@@ -51,12 +51,12 @@ export default class History extends Component {
                         tempDate = date1;
 
                         return (
-                            <div>
+                            <div key={index}>
                                 {
                                     dateString ? <div className={styles.date}>{dateString}</div> : null
                                 }
                                 
-                                <div key={index} className={history.from_user === user._id? styles['send-message']: styles['receive-message']}>                            
+                                <div className={history.from_user === user._id? styles['send-message']: styles['receive-message']}>                            
                                     {history.content}
                                 </div>
                             </div>
