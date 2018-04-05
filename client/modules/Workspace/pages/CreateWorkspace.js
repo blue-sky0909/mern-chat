@@ -83,7 +83,7 @@ class CreateWorkspace extends Component  {
       <div>
         <h3>Create Workspace</h3>
         <Form horizontal className="insideLogInForm" onSubmit={this.submit}>
-          <FormGroup controlId="formHorizontalUserName">
+          <FormGroup controlId="formHorizontalFullName">
             <Row className={styles['custom-row']}>
               <Col sm={4}>
                 Full Name
@@ -100,7 +100,7 @@ class CreateWorkspace extends Component  {
             </Row>
           </FormGroup>
 
-          <FormGroup controlId="formHorizontalEmail">
+          <FormGroup controlId="formHorizontalDisplayName">
             <Row className={styles['custom-row']}>
               <Col sm={4}>
                 Display Name
@@ -117,7 +117,7 @@ class CreateWorkspace extends Component  {
             </Row>
           </FormGroup>
 
-           <FormGroup controlId="formHorizontalEmail">
+           <FormGroup controlId="formHorizontalAdminUser">
             <Row className={styles['custom-row']}>
               <Col sm={4}>
                 Admin User

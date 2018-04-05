@@ -14,7 +14,7 @@ export function create(req, res) {
             workspace.fullname = req.body.fullname;
             workspace.displayname = req.body.displayname;
             workspace.email = req.body.email;
-            workspace.password = user.setPassword(req.body.password);
+            workspace.password = workspace.setPassword(req.body.password);
 
             workspace.save(function(err, result) {
                 if(err) {
