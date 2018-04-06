@@ -1,31 +1,29 @@
 import Workspace from '../models/workspace';
 
 export function create(req, res) {
-    Workspace.findOne({email: req.body.email}, function(error, workspace) {
+      console.log(req.body);
+    Workspace.findOne({username: req.body.userName}, function(error, workspace) {
         if (workspace){
             res.send({
                 status: 500,
                 success: false,
-                message: "This email already exists",
+                message: "This username already exists",
             })
         } else{
             const workspace = new Workspace();
-            workspace.username = req.body.username;
-            workspace.fullname = req.body.fullname;
-            workspace.displayname = req.body.displayname;
-            workspace.email = req.body.email;
+            workspace.username = req.body.userName;
+            workspace.fullname = req.body.fullName;
+            workspace.displayname = req.body.displayName;
             workspace.password = workspace.setPassword(req.body.password);
 
             workspace.save(function(err, result) {
                 if(err) {
-                    res.send({
-                        status: 500,
+                    res.status(500).send({
                         success: false,
                         error: err,
                     })
                 } else {
-                    res.send({
-                        status: 200,
+                    res.status(200).send({
                         success: true,
                         workspace: result
                     })

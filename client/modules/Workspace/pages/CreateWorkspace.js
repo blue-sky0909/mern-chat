@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Button, Form, FormGroup, FormControl, Row, Col, ControlLabel, Panel } from 'react-bootstrap';
 import NotificationSystem from 'react-notification-system';
 
+import * as workspaceActions from '../WorkspaceAction';
 import styles from  './Workspace.css';
 
 class CreateWorkspace extends Component  {
@@ -34,7 +35,13 @@ class CreateWorkspace extends Component  {
   }
 
   componentWillReceiveProps(nextProps) {
-    
+  console.log(nextProps.workspace.data)  
+    if(nextProps.workspace.data.success === false) {
+      this._notificationSystem.addNotification({
+        message: nextProps.workspace.data.message,
+        level: 'error'
+      });      
+    }
   }
 
   submit(e) {
@@ -72,7 +79,14 @@ class CreateWorkspace extends Component  {
       return this.setState({ matchError: true })
     }
 
-    this.props.registerActions.register(displayName, password, fullName)
+    const data = {
+      fullName: fullName,
+      displayName: displayName,
+      userName: email,
+      password: password
+    }
+
+    this.props.createWorkspace(data);
 
   }
 
@@ -81,7 +95,6 @@ class CreateWorkspace extends Component  {
 
     return (
       <div>
-        <h3>Create Workspace</h3>
         <Form horizontal className="insideLogInForm" onSubmit={this.submit}>
           <FormGroup controlId="formHorizontalFullName">
             <Row className={styles['custom-row']}>
@@ -190,18 +203,18 @@ class CreateWorkspace extends Component  {
 
 function mapStateToProps(state) {
   return {
-    register: state.register,
-    router: state.routing
+    workspace: state.workspace
   };
 }
 
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     registerActions: bindActionCreators(registerActions, dispatch)
-//   };
-// }
+function mapDispatchToProps(dispatch) {
+  return {
+    workspaceActions: bindActionCreators(workspaceActions, dispatch),
+    createWorkspace: (data) => dispatch({type: 'CREATE_WORKSPACE_REQUEST', data: data})
+  };
+}
 
 export default connect(
-  mapStateToProps,
-  null
+  null,
+  mapDispatchToProps
 )(CreateWorkspace);

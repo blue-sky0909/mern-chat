@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { Panel, Tabs, Tab } from 'react-bootstrap';
 
 import CreateWorkspace from './CreateWorkspace';
+import ListWorkspace from './ListWorkspace';
 import styles from  './Workspace.css';
 
 export default class Workspace extends Component  {
@@ -17,7 +18,6 @@ export default class Workspace extends Component  {
   }
 
   handleSelect(key) {
-    console.log(key)
     this.setState({ key });
   }
 
@@ -31,7 +31,7 @@ export default class Workspace extends Component  {
           animation={false}
         >
           <Tab eventKey={1} title="List Workspace">
-            List Workspace
+            <ListWorkspace/>
           </Tab>
           <Tab eventKey={2} title="Create Workspace">
             <CreateWorkspace/>

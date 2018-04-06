@@ -10,6 +10,7 @@ import intl from './modules/Intl/IntlReducer';
 import loginReducer from './modules/Login/LoginReducer';
 import registerReducer from './modules/Register/RegisterReducer';
 import dashboardReducer from './modules/Dashboard/DashboardReducer';
+import WorkspaceReducer from './modules/Workspace/WorkspaceReducer';
 // Combine all reducers into one root reducer
 export default combineReducers({
   app,
@@ -17,5 +18,6 @@ export default combineReducers({
   routing: routerReducer,
   login: loginReducer,
   register: registerReducer,
-  dashboard: dashboardReducer
+  dashboard: dashboardReducer,
+  workspace: WorkspaceReducer
 });

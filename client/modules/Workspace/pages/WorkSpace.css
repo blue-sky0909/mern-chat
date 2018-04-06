@@ -27,3 +27,7 @@
 input.has-error {
     border: 1px solid red;
 }
+.list {
+    display: flex !important;
+    justify-content: space-around;
+}

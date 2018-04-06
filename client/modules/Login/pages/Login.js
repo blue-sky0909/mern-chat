@@ -38,7 +38,6 @@ class Login extends Component  {
   }
 
   componentWillReceiveProps(nextProps) {
-console.log(nextProps.login.data)
     if(nextProps.login.data.success === false) {
       this._notificationSystem.addNotification({
         message: nextProps.login.data.message,
