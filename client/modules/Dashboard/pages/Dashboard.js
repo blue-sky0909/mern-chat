@@ -18,20 +18,20 @@ class Dashboard extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       token: null,
       response: false,
       endpoint: "localhost:8000",
       message: "",
-      sendMessage: true
+      sendMessage: true,
+      workspace: props.params.workspace
     }
     this.submit = this.submit.bind(this);
   }
 
   componentDidMount() {
     const { message } = this.state;
-    this.props.dashboardActions.getMessages();
+    this.props.dashboardActions.getMessages({workspace: this.state.workspace});
     this.setState({ token: localStorage.getItem('token') });   
     socket.on("fromMessage", data => {
       if(data.from_user && data.from_user != JSON.parse(localStorage.getItem('user'))._id)
@@ -55,7 +55,8 @@ class Dashboard extends Component {
         from_user: JSON.parse(localStorage.getItem('user'))._id,
         to_user: '5ab4bd705dc8207f350ea01c',
         content: message,
-        created_at: new Date()
+        created_at: new Date(),
+        workspace: this.state.workspace
       }
       socket.send(data);
     }

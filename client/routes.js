@@ -20,13 +20,15 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/Register/pages/Register');
   require('./modules/Dashboard/pages/Dashboard');
   require('./modules/Workspace/pages/Workspace');
+  require('./modules/NotFound/pages/NotFound');
 }
 
 // react-router setup with code-splitting
 // More info: http://blog.mxstbr.com/2016/01/react-apps-with-pages/
 export default (
-  <Route path="/" component={App}>
-    <IndexRoute
+  <Route path="/workspace" component={App}>
+    <Route
+      path="/dashboard/:workspace"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/Dashboard/pages/Dashboard').default);
@@ -34,15 +36,14 @@ export default (
       }}
     />
     <Route
-      path="/login"
+      path="/login/:workspace"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/Login/pages/Login').default);
         });
       }}
     />
-    <Route
-      path="/workspace"
+    <IndexRoute
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/Workspace/pages/Workspace').default);
@@ -50,13 +51,20 @@ export default (
       }}
     />
     <Route
-      path="/register"
+      path="/register/:workspace"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/Register/pages/Register').default);
         });
       }}
     />
-
+    <Route
+      path="*"
+      getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/NotFound/pages/NotFound').default);
+        });
+      }}
+    />
   </Route>
 );

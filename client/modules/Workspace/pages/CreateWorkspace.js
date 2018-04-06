@@ -37,9 +37,16 @@ class CreateWorkspace extends Component  {
   componentWillReceiveProps(nextProps) {
   console.log(nextProps.workspace.data)  
     if(nextProps.workspace.data.success === false) {
-      this._notificationSystem.addNotification({
+      return this._notificationSystem.addNotification({
         message: nextProps.workspace.data.message,
         level: 'error'
+      });      
+    }
+    
+    if(nextProps.workspace.data.success === true) {
+      this._notificationSystem.addNotification({
+        message: 'Create Success',
+        level: 'sucess'
       });      
     }
   }
@@ -215,6 +222,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(CreateWorkspace);

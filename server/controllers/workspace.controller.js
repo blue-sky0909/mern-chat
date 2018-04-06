@@ -2,12 +2,12 @@ import Workspace from '../models/workspace';
 
 export function create(req, res) {
       console.log(req.body);
-    Workspace.findOne({username: req.body.userName}, function(error, workspace) {
+    Workspace.findOne({displayname: req.body.displayName}, function(error, workspace) {
         if (workspace){
             res.send({
                 status: 500,
                 success: false,
-                message: "This username already exists",
+                message: "This displayname already exists",
             })
         } else{
             const workspace = new Workspace();

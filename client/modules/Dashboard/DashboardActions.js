@@ -18,9 +18,9 @@ export function getMessagesFailed(error) {
   };
 }
 
-export function getMessages() {
+export function getMessages(body) {
   return (dispatch) => {
-    return callApi('message', 'get')
+    return callApi('message', 'post', body)
     .then(res => dispatch(getMessagesSuccess(res)))
     .catch(error => dispatch(getMessagesFailed(error)));
   };

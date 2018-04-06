@@ -18,7 +18,7 @@ class Login extends Component  {
       password: "",
       emailError: false,
       passError: false,
-      remember: false
+      remember: false      
     };
 
     this.submit = this.submit.bind(this);
@@ -26,6 +26,9 @@ class Login extends Component  {
   }
 
   componentDidMount() {
+    console.log(this.props.params)
+    if(this.props.params) 
+      this.setState({workspace: this.props.params.workspace })
     this._notificationSystem = this.refs.notificationSystem;
     const remember = localStorage.getItem('remember');
     const user = JSON.parse(localStorage.getItem('user'))
@@ -48,7 +51,7 @@ class Login extends Component  {
       localStorage.setItem('token', nextProps.login.data.token);
       localStorage.setItem('user', JSON.stringify(nextProps.login.data.user));
       localStorage.setItem('remember', this.state.remember);
-      this.props.history.push('/');      
+      this.props.history.push(`/dashboard/${this.state.workspace}`);      
     }
   }
 
@@ -58,7 +61,7 @@ class Login extends Component  {
 
   submit(e) {
     e.preventDefault();
-    const { email, password } = this.state;
+    const { email, password, workspace } = this.state;
 
     this.setState({ passError: false });
     this.setState({ emailError: false });
