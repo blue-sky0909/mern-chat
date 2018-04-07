@@ -26,7 +26,14 @@ if (process.env.NODE_ENV !== 'production') {
 // react-router setup with code-splitting
 // More info: http://blog.mxstbr.com/2016/01/react-apps-with-pages/
 export default (
-  <Route path="/workspace" component={App}>
+  <Route path="/" component={App}>
+    <IndexRoute
+      getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Workspace/pages/Workspace').default);
+        });
+      }}
+    />
     <Route
       path="/dashboard/:workspace"
       getComponent={(nextState, cb) => {
@@ -42,14 +49,7 @@ export default (
           cb(null, require('./modules/Login/pages/Login').default);
         });
       }}
-    />
-    <IndexRoute
-      getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/Workspace/pages/Workspace').default);
-        });
-      }}
-    />
+    />    
     <Route
       path="/register/:workspace"
       getComponent={(nextState, cb) => {

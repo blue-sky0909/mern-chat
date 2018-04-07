@@ -34,9 +34,15 @@ class Dashboard extends Component {
     this.props.dashboardActions.getMessages({workspace: this.state.workspace});
     this.setState({ token: localStorage.getItem('token') });   
     socket.on("fromMessage", data => {
-      if(data.from_user && data.from_user != JSON.parse(localStorage.getItem('user'))._id)
+      if((data.from_user && data.from_user != JSON.parse(localStorage.getItem('user'))._id) && (data.workspace == this.state.workspace)) {
         NotificationManager.info('New message');
-      this.setState({ response: data });
+        this.setState({ response: data });       
+      }
+
+      if((data.from_user && data.from_user == JSON.parse(localStorage.getItem('user'))._id) && (data.workspace == this.state.workspace)) {
+        this.setState({ response: data });       
+      }
+
       this.scrollDown(); 
     });
     this.scrollDown();
