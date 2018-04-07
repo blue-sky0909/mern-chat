@@ -29,7 +29,7 @@ class Header extends Component{
     e.preventDefault();
     localStorage.removeItem('token');
     this.props.loginActions.reset();
-    this.props.history.push('/login');
+    this.props.history.push('/');
   }
 
   render() {
