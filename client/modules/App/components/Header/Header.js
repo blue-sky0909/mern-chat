@@ -40,7 +40,7 @@ class Header extends Component{
         {
           token ?
             <Link onClick={(e) => this.logout(e)}>Log Out</Link>
-          : <Link to="/login">Log In</Link>
+          : null
         }
       </div>
     );
