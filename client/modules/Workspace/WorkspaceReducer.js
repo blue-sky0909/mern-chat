@@ -4,12 +4,17 @@ export const CREATE_WORKSPACE_REQUEST = 'CREATE_WORKSPACE_REQUEST';
 export const FETCH_WORKSPACE_SUCCESS = 'FETCH_WORKSPACE_SUCCESS';
 export const FETCH_WORKSPACE_FAILED = 'FETCH_WORKSPACE_FAILED';
 export const FETCH_WORKSPACE_REQUEST = 'FETCH_WORKSPACE_REQUEST';
+export const CREATE_CONFIRM_SUCCESS = 'CREATE_CONFIRM_SUCCESS';
+export const CREATE_CONFIRM_FAILED = 'CREATE_CONFIRM_FAILED';
 
 const initialState = {
     isLoaded: false,
     data: {},
     error: null,
-    workspaces: []
+    workspaces: [],
+    sendmail: null,
+    message: "",
+    mailInfo: {}
 };
 
 const workspaceReducer = function(state = initialState, action) {
@@ -47,6 +52,17 @@ const workspaceReducer = function(state = initialState, action) {
                 isLoaded: false,
                 workspaces: [],
                 error: null
+            });
+
+        case CREATE_CONFIRM_SUCCESS:
+            return Object.assign({}, state, {
+                sendmail: true,
+                mailInfo: action.data,
+            });
+        case CREATE_CONFIRM_FAILED:
+            return Object.assign({}, state, {
+                sendmail: false,
+                mailInfo: action.error
             });
         default:
             return state;

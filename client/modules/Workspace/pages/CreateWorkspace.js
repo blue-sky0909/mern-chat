@@ -42,11 +42,11 @@ class CreateWorkspace extends Component  {
         level: 'error'
       });      
     }
-    
+
     if(nextProps.workspace.data.success === true) {
       this._notificationSystem.addNotification({
         message: 'Create Success',
-        level: 'sucess'
+        level: 'success'
       });      
     }
   }

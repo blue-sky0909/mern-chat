@@ -51,18 +51,10 @@ export default (
       }}
     />    
     <Route
-      path="/register/:workspace"
+      path="/register"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/Register/pages/Register').default);
-        });
-      }}
-    />
-    <Route
-      path="*"
-      getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/NotFound/pages/NotFound').default);
         });
       }}
     />

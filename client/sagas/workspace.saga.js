@@ -14,14 +14,17 @@ import {
     CREATE_WORKSPACE_REQUEST,
     FETCH_WORKSPACE_REQUEST,
     FETCH_WORKSPACE_SUCCESS,
-    FETCH_WORKSPACE_FAILED
+    FETCH_WORKSPACE_FAILED,
+    CREATE_CONFIRM_REQUEST
 } from '../modules/Workspace/WorkspaceAction';
 import {
 	getWorkspaceSuccess,
 	getWorkspaceFailed,
 	createWorkspaceSuccess,
 	createWorkspaceFailed,
-	createWorkspaceRequest
+	createWorkspaceRequest,
+	confrimWorkspaceSuccess,
+	confrimWorkspaceFailed
 } from '../modules/Workspace/WorkspaceAction'
 import apiCaller from '../util/apiCaller';
 
@@ -40,7 +43,7 @@ function* createWorkspaceReqeset(data) {
 }
 
 function* createWorkspace(data) {
-	console.log("dsata=======>",data)
+	console.log("create=======>",data)
     try {
         const response = yield call(apiCaller, 'workspace/create', 'post', data.data);
         yield put(createWorkspaceSuccess(response))
@@ -49,7 +52,20 @@ function* createWorkspace(data) {
     }
 }
 
+
+function* sendConfirm(email) {
+	const data = email.email;
+	console.log("email=======>",data)
+    try {
+        const response = yield call(apiCaller, 'workspace/confirm', 'post', {email: data});
+        yield put(confrimWorkspaceSuccess(response))
+    } catch (err) {
+        yield put(confrimWorkspaceFailed(err))
+    }
+}
+
 export default function* rootSaga() {
     yield takeEvery(FETCH_WORKSPACE_REQUEST, getWorkspaceList)
     yield takeEvery(CREATE_WORKSPACE_REQUEST, createWorkspace)
+    yield takeEvery(CREATE_CONFIRM_REQUEST, sendConfirm)
 }
