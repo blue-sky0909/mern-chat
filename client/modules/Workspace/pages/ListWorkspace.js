@@ -75,9 +75,8 @@ class ListWorkspace extends Component {
           }            
           </ListGroup>
           <Form horizontal className="insideLogInForm" onSubmit={this.submit}>
-            <FormGroup controlId="formHorizontalEmail">
               <Row className={styles['custom-row']}>
-                <Col sm={6}>
+                <Col sm={9}>
                   <FormControl
                     type="email" placeholder="Email" name="email" value={email}
                     className={emailError ? styles['has-error']: styles['no-error']}
@@ -86,13 +85,12 @@ class ListWorkspace extends Component {
                     Please insert Email
                   </span>
                 </Col>
-                <Col sm={6}>
+                <Col sm={3}>
                   <Button type="submit" bsStyle="primary" className={styles['btn-submit']}>
                     Confirm
                   </Button>
                 </Col>
               </Row>
-            </FormGroup>
           </Form>
           <NotificationSystem ref="notificationmessage" />          
         </Panel>

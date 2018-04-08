@@ -31,3 +31,7 @@ input.has-error {
     display: flex !important;
     justify-content: space-around;
 }
+
+.custom-row {
+    padding: 15px;
+}
